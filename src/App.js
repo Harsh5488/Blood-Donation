@@ -1,23 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { getDatabase, ref, set } from "firebase/database";
+import { app } from "./firebase";
 
-function App() {
-  return (
+
+const db=getDatabase(app);
+
+function App(){
+
+  
+
+  const putData = () => {
+    set (ref(db, "users/Ankit"), {
+      id:2,
+      name: "Ankit Sharma",
+      age:22,
+    });
+  };
+
+  const signUpUser = () =>{
+    createUserWithEmailAndPassword(
+      auth,
+      "harsh@gmail.com",
+      "123456789"
+    ).then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log(userCredential)
+       // ...
+    }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+    });
+  }
+
+  
+
+  return(
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Registration form</h1>
+      <button onClick={putData}>Put Data</button>
+      <button onClick={signUpUser}>Create User</button>
     </div>
   );
 }
